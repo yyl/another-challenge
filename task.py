@@ -10,6 +10,9 @@ class Task(object):
     @property
     def cur_floor(self):
         return self._cur_fl
-
+    
     def __cmp__(self, other):
-        return cmp(self.dest, other.dest)
+        return cmp(self.destination, other.destination)
+
+    def __repr__(self):
+        return "task(%d, %d)" % (self.cur_floor, self.destination)

@@ -43,6 +43,7 @@ class Controller(object):
             print "Error: destination out of range"
             exit(0)
         self._task_queue[task.cur_floor].put(task)
+        print "controller receives %s" % (task)
 
     def assignTask(self, elevator):
         assigned = False
@@ -76,12 +77,22 @@ class Controller(object):
                 yield self._elevators[i]
 
     def tick(self):
+        print "================ time tick ================"
         # for every working elevator, make a step
         for e in self.iter_working_elevators():
             e.move()
+            # check if the elevator could and need to take more tasks
+            if not e.idle and not e.isFull():
+                cur_task_queue = self._task_queue[e.cur_floor]
+                while not cur_task_queue.empty() and not e.isFull():
+                    cur_task = cur_task_queue.get()
+                    if e.within(cur_task):
+                        e.addTask(cur_task)
+                    else:
+                        cur_task_queue.put(cur_task)
+                        break
         # for every idle elevator, take assignment,
         # or make towards an assignment
         for e in self.iter_idle_elevators():
             self.assignTask(e)
         self.status
-
