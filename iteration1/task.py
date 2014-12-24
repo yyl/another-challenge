@@ -12,4 +12,4 @@ class Task(object):
         return self._cur_fl
 
     def __cmp__(self, other):
-        return cmp(self.dest, other.dest)
+        return cmp(self.destination, other.destination)
