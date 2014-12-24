@@ -12,7 +12,8 @@ class Task(object):
         return self._cur_fl
     
     def __cmp__(self, other):
-        return cmp(self.destination, other.destination)
+        return cmp(abs(self.destination - self.cur_floor), 
+            abs(other.destination - self.cur_floor))
 
     def __repr__(self):
         return "task(%d, %d)" % (self.cur_floor, self.destination)

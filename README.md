@@ -58,7 +58,7 @@ Implementations:
 	
 A task here is defined by `(cur_floor, destination)` pair. Because each elevator could only take one task, we do not have to worry about store and order multiple tasks for each elevator. 
 
-For controller, I setup multiple priority queues for storing and ordering tasks. One obvious choice to keep tasks ordered is queue, which is a FCFS structure. But here I try something different. Priority queue is built for scheduling problems as it could order stored objects in desired manner. I use a priority queue for tasks of each floor. I keep them grouped in each floor so that it is easy to find elevator that is closest to them. Within each floor, I keep tasks based on the distance from current floor to their destinations.
+For controller, I setup multiple priority queues for storing and ordering tasks. One obvious choice to keep tasks ordered is queue, which is a FCFS structure. But here I try something different. Priority queue is built for scheduling problems as it could order stored objects in desired manner. I use a priority queue for tasks of each floor. I keep them grouped in each floor so that it is easy to find elevator that is closest to them. Within each floor, I keep tasks based on the absolute distance from current floor to their destinations.
 
 In time-stepping simulation (`tick()`), the controller does two things:
 
