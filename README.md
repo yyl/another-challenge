@@ -1,5 +1,13 @@
 another-challenge
 =================
+### Intro
+
+To execute the program, do `python main.py`. The latest version is in the root dir, and each folder named `iterationX` indicates older versions.
+
+- `main.py`: the main program where it simulates the elevators and controller running
+- `elevator.py`: elevator class to represent an elevator
+- `controller.py`: controller class to represent the contoller who controls all elevators in the buidling
+- `task.py`: represent a person wants to go from current floor to a certain floor in the building
 
 ### TODO:
 - ~~let elevator take multiple tasks~~
