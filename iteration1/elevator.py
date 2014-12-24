@@ -17,6 +17,7 @@ class Elevator(object):
     def idle(self):
         return self._direction == 0
     
+    # get the current destination
     @property
     def destination(self):
         if len(self._destinations) == 0:
@@ -28,6 +29,7 @@ class Elevator(object):
         return "elevator %d: current floor %d, destination %s" % \
                 (self._id, self.cur_floor, self.destination)
 
+    # add a destination to the queue
     def addDestination(self, dest):
         self._destinations.appendleft(dest)
         if self.destination > self._cur_floor:
@@ -35,6 +37,7 @@ class Elevator(object):
         else:
             self._direction = -1
 
+    # assign a task
     def addTask(self, task):
         assert(isinstance(task, Task))
         if task.cur_floor != self.cur_floor:

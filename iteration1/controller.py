@@ -44,14 +44,17 @@ class Controller(object):
             exit(0)
         self._task_queue[task.cur_floor].put(task)
 
+    # find and assign task to elevator
     def assignTask(self, elevator):
         assigned = False
+        # first start from current task to bttom
         for i in xrange(elevator.cur_floor, -1, -1):
             if not self._task_queue[i].empty():
                 task = self._task_queue[i].get()
                 elevator.addTask(task)
                 assigned = True
                 break
+        # then search upwards
         if not assigned:
             for i in xrange(elevator.cur_floor+1, self.max_floor):
                 if not self._task_queue[i].empty():             
@@ -59,7 +62,8 @@ class Controller(object):
                     elevator.addTask(task)
                     assigned = True
                     break
-        
+       
+    # generator to return all idle elevators sorted by their current floor
     def iter_idle_elevators(self):
         idle_elevators = []
         for i in xrange(self.capacity):
@@ -70,6 +74,7 @@ class Controller(object):
         for i in xrange(len(idle_elevators)):
             yield idle_elevators[i]
 
+    # generator to return all working elevators
     def iter_working_elevators(self):
         for i in xrange(self.capacity):
             if not self._elevators[i].idle:
@@ -79,8 +84,7 @@ class Controller(object):
         # for every working elevator, make a step
         for e in self.iter_working_elevators():
             e.move()
-        # for every idle elevator, take assignment,
-        # or make towards an assignment
+        # for every idle elevator, assign a task (if any)
         for e in self.iter_idle_elevators():
             self.assignTask(e)
         self.status
